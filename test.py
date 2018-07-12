@@ -9,7 +9,7 @@ from random import random
 class Ball:
 
     def __init__(self, pos, size, vx):
-        self.image = Rectangle(source='smiley.png', pos=pos, size=size)
+        self.image = Rectangle(source='images/smiley.png', pos=pos, size=size)
         self.vx = vx
 
     def draw(self, canvas):
@@ -18,7 +18,7 @@ class Ball:
     def move(self, dt):
         self.image.pos = (self.image.pos[0] + self.vx * dt, self.image.pos[1])
         if self.image.pos[0] + self.image.size[0] >= Window.size[0] or self.image.pos[0] <= 0:
-            self.image.source = 'smiley_sad.png'
+            self.image.source = 'images/smiley_sad.png'
             self.vx = -self.vx
 
 
