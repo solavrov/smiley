@@ -14,8 +14,9 @@ class Game(App):
 
     def build(self):
         # Window.size = (600, 600)
-        stage = Stage()
-        return stage
+        s = Stage()
+        return s
 
 
-Game().run()
+g = Game()
+g.run()
