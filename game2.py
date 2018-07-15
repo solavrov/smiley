@@ -6,8 +6,8 @@ from kivy.app import App
 
 class Actor:
 
-    def __init__(self, x, y, size, source):
-        self.image = Rectangle(pos=(x, y), size=(size, size), source=source)
+    def __init__(self, x, y, size, face):
+        self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 
 
 class Stage(Widget):

@@ -18,6 +18,7 @@ class Ball:
     def move(self, dt):
         self.image.pos = (self.image.pos[0] + self.vx * dt, self.image.pos[1])
         if self.image.pos[0] + self.image.size[0] >= Window.size[0] or self.image.pos[0] <= 0:
+            print('bump!')
             self.image.source = 'images/smiley_sad.png'
             self.vx = -self.vx
 

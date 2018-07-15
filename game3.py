@@ -7,11 +7,12 @@ from kivy.clock import Clock
 
 class Actor:
 
-    def __init__(self, x, y, vx, size, source):
+    def __init__(self, x, y, vx, size, face):
         self.x = x
         self.y = y
         self.vx = vx
-        self.image = Rectangle(pos=(x, y), size=(size, size), source=source)
+        self.size = size
+        self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 
     def move(self, dt):
         self.x += self.vx * dt
@@ -32,7 +33,7 @@ class Game(App):
     def build(self):
         Window.size = (600, 600)
         s = Stage()
-        a1 = Actor(0, 300, 10, 50, 'images/smiley.png')
+        a1 = Actor(0, 300, 20, 50, 'images/smiley.png')
         s.add(a1)
         a1.move(1)
         return s
