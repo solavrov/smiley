@@ -124,7 +124,7 @@ class Game(App):
         s = Stage(h)
         s.set_background(Background('images/space.png'))
         a1 = Actor(x=0, y=300, vx=100, vy=100, size=50,
-                   happy_face='images/smiley.png', sad_face='images/smiley_bump.png', sad_time=0.4)
+                   happy_face='images/smiley.png', sad_face='images/smiley_crazy.png', sad_time=0.4)
         s.add(a1)
         # s.add(a2)
         s.show_hero()
