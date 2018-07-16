@@ -1,4 +1,5 @@
-from kivy.graphics import Ellipse, Color, Rectangle
+# x_bump
+from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
@@ -17,11 +18,15 @@ class Actor:
     def move(self, dt):
         self.x += self.vx * dt
         self.image.pos = (self.x, self.y)
-        if self.is_x_bump():
-            self.vx = -self.vx
+        self.do_if_bump()
 
-    def is_x_bump(self):
-        return self.x + self.size >= Window.size[0] or self.x <= 0
+    def do_if_bump(self):
+        if self.x + self.size > Window.size[0]:
+            self.vx = -self.vx
+            self.x = Window.size[0] - self.size
+        if self.x < 0:
+            self.vx = -self.vx
+            self.x = 0
 
 
 class Stage(Widget):

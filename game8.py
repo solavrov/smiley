@@ -1,4 +1,5 @@
-from kivy.graphics import Ellipse, Color, Rectangle
+# timer and dynamic emotion
+from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
@@ -27,19 +28,25 @@ class Actor:
         self.do_if_bump()
         self.check_timer(dt)
 
-    def is_x_bump(self):
-        return self.x + self.size >= Window.size[0] or self.x <= 0
-
-    def is_y_bump(self):
-        return self.y + self.size >= Window.size[1] or self.y <= 0
-
     def do_if_bump(self):
-        if self.is_x_bump():
+        if self.x + self.size > Window.size[0]:
             self.vx = -self.vx
+            self.x = Window.size[0] - self.size
             self.image.source = self.sad_face
             self.timer = self.sad_time
-        if self.is_y_bump():
+        if self.x < 0:
+            self.vx = -self.vx
+            self.x = 0
+            self.image.source = self.sad_face
+            self.timer = self.sad_time
+        if self.y + self.size > Window.size[0]:
             self.vy = -self.vy
+            self.y = Window.size[0] - self.size
+            self.image.source = self.sad_face
+            self.timer = self.sad_time
+        if self.y < 0:
+            self.vy = -self.vy
+            self.y = 0
             self.image.source = self.sad_face
             self.timer = self.sad_time
 
@@ -71,7 +78,8 @@ class Game(App):
     def build(self):
         Window.size = (600, 600)
         s = Stage()
-        a1 = Actor(x=0, y=300, vx=100, vy=100, size=50, happy_face='images/smiley.png', sad_face='images/smiley_bump.png', sad_time=0.4)
+        a1 = Actor(x=0, y=300, vx=100, vy=100, size=50,
+                   happy_face='images/smiley.png', sad_face='images/smiley_sad.png', sad_time=0.4)
         s.add(a1)
         # s.add(a2)
         Clock.schedule_interval(s.move, 1/60)

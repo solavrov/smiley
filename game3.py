@@ -1,8 +1,8 @@
-from kivy.graphics import Ellipse, Color, Rectangle
+# step moving
+from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
-from kivy.clock import Clock
 
 
 class Actor:

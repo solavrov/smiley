@@ -1,4 +1,5 @@
-from kivy.graphics import Ellipse, Color, Rectangle
+# 2D moving and bumping
+from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
@@ -21,17 +22,19 @@ class Actor:
         self.image.pos = (self.x, self.y)
         self.do_if_bump()
 
-    def is_x_bump(self):
-        return self.x + self.size >= Window.size[0] or self.x <= 0
-
-    def is_y_bump(self):
-        return self.y + self.size >= Window.size[1] or self.y <= 0
-
     def do_if_bump(self):
-        if self.is_x_bump():
+        if self.x + self.size > Window.size[0]:
             self.vx = -self.vx
-        if self.is_y_bump():
+            self.x = Window.size[0] - self.size
+        if self.x < 0:
+            self.vx = -self.vx
+            self.x = 0
+        if self.y + self.size > Window.size[0]:
             self.vy = -self.vy
+            self.y = Window.size[0] - self.size
+        if self.y < 0:
+            self.vy = -self.vy
+            self.y = 0
 
 
 class Stage(Widget):
