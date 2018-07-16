@@ -1,9 +1,15 @@
-# game8 + game9
+# background
 from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
 from kivy.clock import Clock
+
+
+class Background:
+
+    def __init__(self, picture):
+        self.image = Rectangle(pos=(0, 0), size=(Window.size[0], Window.size[1]), source=picture)
 
 
 class Hero:
@@ -81,6 +87,9 @@ class Stage(Widget):
         self.keyboard = Window.request_keyboard(self.close_keyboard, self)
         self.keyboard.bind(on_key_down=self.move_on_key)
 
+    def set_background(self, background):
+        self.canvas.add(background.image)
+
     def show_hero(self):
         self.canvas.add(self.hero.image)
 
@@ -113,6 +122,7 @@ class Game(App):
         Window.size = (600, 600)
         h = Hero(300, 300, 50, 'images/smiley.png')
         s = Stage(h)
+        s.set_background(Background('images/space.png'))
         a1 = Actor(x=0, y=300, vx=100, vy=100, size=50,
                    happy_face='images/smiley.png', sad_face='images/smiley_sad.png', sad_time=0.4)
         s.add(a1)
@@ -124,4 +134,3 @@ class Game(App):
 
 g = Game()
 g.run()
-
