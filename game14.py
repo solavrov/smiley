@@ -1,4 +1,4 @@
-# boundaries
+# boundaries and stop on hit
 from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
@@ -98,6 +98,8 @@ class Stage(Widget):
         super().__init__(**kwargs)
         self.hero = hero
         self.actors = []
+        self.clock = None
+        self.is_running = True
         self.keyboard = Window.request_keyboard(self.close_keyboard, self)
         self.keyboard.bind(on_key_down=self.move_on_key)
         self.keyboard.bind(on_key_up=self.do_on_key_up)
@@ -117,34 +119,50 @@ class Stage(Widget):
             a.move(dt)
         self.do_if_hit_hero()
 
+    # def do_if_hit_hero(self):
+    #     is_hero_hit = False
+    #     for a in self.actors:
+    #         if a.is_hit(self.hero.x, self.hero.y, self.hero.size):
+    #             is_hero_hit = True
+    #             break
+    #     if is_hero_hit:
+    #         self.hero.image.source = self.hero.hit_face
+    #     else:
+    #         self.hero.image.source = self.hero.face
+
     def do_if_hit_hero(self):
-        is_hero_hit = False
         for a in self.actors:
             if a.is_hit(self.hero.x, self.hero.y, self.hero.size):
-                is_hero_hit = True
+                self.hero.image.source = self.hero.hit_face
+                self.stop()
                 break
-        if is_hero_hit:
-            self.hero.image.source = self.hero.hit_face
-        else:
-            self.hero.image.source = self.hero.face
 
     def close_keyboard(self):
         self.keyboard.unbind(on_key_down=self.move_on_key)
         self.keyboard = None
 
     def move_on_key(self, keyboard, keycode, text, modifiers):
-        self.hero.image.source = self.hero.moving_face
-        if keycode[1] == 'up':
-            self.hero.move(0, 10)
-        if keycode[1] == 'down':
-            self.hero.move(0, -10)
-        if keycode[1] == 'left':
-            self.hero.move(-10, 0)
-        if keycode[1] == 'right':
-            self.hero.move(10, 0)
+        if self.is_running:
+            self.hero.image.source = self.hero.moving_face
+            if keycode[1] == 'up':
+                self.hero.move(0, 10)
+            if keycode[1] == 'down':
+                self.hero.move(0, -10)
+            if keycode[1] == 'left':
+                self.hero.move(-10, 0)
+            if keycode[1] == 'right':
+                self.hero.move(10, 0)
 
     def do_on_key_up(self, keyboard, keycode):
-        self.hero.image.source = self.hero.face
+        if self.is_running:
+            self.hero.image.source = self.hero.face
+
+    def start(self):
+        self.clock = Clock.schedule_interval(self.move, 1/60)
+
+    def stop(self):
+        self.clock.cancel()
+        self.is_running = False
 
 
 class Game(App):
@@ -159,7 +177,7 @@ class Game(App):
         s.add(a1)
         # s.add(a2)
         s.show_hero()
-        Clock.schedule_interval(s.move, 1/60)
+        s.start()
         return s
 
 
