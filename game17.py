@@ -168,13 +168,13 @@ class Stage(Widget):
         if self.is_running:
             self.hero.image.source = self.hero.moving_face
             if keycode[1] == 'up':
-                self.hero.move(0, 10)
+                self.hero.move(0, 5)
             if keycode[1] == 'down':
-                self.hero.move(0, -10)
+                self.hero.move(0, -5)
             if keycode[1] == 'left':
-                self.hero.move(-10, 0)
+                self.hero.move(-5, 0)
             if keycode[1] == 'right':
-                self.hero.move(10, 0)
+                self.hero.move(5, 0)
 
     def do_on_key_up(self, keyboard, keycode):
         if self.is_running:
@@ -202,7 +202,7 @@ class Game(App):
 
         for i in range(5):
             angle = random() * 2 * pi
-            a = Actor(x=random() * 100, y=random() * 100, vx=50 * sin(angle), vy=50 * cos(angle), a=1.1, size=50,
+            a = Actor(x=random() * 150, y=random() * 150, vx=50 * sin(angle), vy=50 * cos(angle), a=1.1, size=50,
                       happy_face='images/smiley.png', sad_face='images/smiley_crazy.png', sad_time=0.4)
             s.add(a)
 
