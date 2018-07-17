@@ -1,4 +1,4 @@
-# background
+# moving_face
 from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
@@ -14,10 +14,12 @@ class Background:
 
 class Hero:
 
-    def __init__(self, x, y, size, face):
+    def __init__(self, x, y, size, face, moving_face):
         self.x = x
         self.y = y
         self.size = size
+        self.face = face
+        self.moving_face = moving_face
         self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 
     def move(self, dx, dy):
@@ -86,6 +88,7 @@ class Stage(Widget):
         self.actors = []
         self.keyboard = Window.request_keyboard(self.close_keyboard, self)
         self.keyboard.bind(on_key_down=self.move_on_key)
+        self.keyboard.bind(on_key_up=self.do_on_key_up)
 
     def set_background(self, background):
         self.canvas.add(background.image)
@@ -106,6 +109,7 @@ class Stage(Widget):
         self.keyboard = None
 
     def move_on_key(self, keyboard, keycode, text, modifiers):
+        self.hero.image.source = self.hero.moving_face
         if keycode[1] == 'up':
             self.hero.move(0, 10)
         if keycode[1] == 'down':
@@ -115,12 +119,15 @@ class Stage(Widget):
         if keycode[1] == 'right':
             self.hero.move(10, 0)
 
+    def do_on_key_up(self, keyboard, keycode):
+        self.hero.image.source = self.hero.face
+
 
 class Game(App):
 
     def build(self):
         Window.size = (600, 600)
-        h = Hero(300, 300, 50, 'images/smiley.png')
+        h = Hero(300, 300, 50, 'images/smiley.png', 'images/smiley_amazed.png')
         s = Stage(h)
         s.set_background(Background('images/space.png'))
         a1 = Actor(x=0, y=300, vx=100, vy=100, size=50,
