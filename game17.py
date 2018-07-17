@@ -1,5 +1,5 @@
 # timer
-from kivy.graphics import Rectangle, Color
+from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.app import App
@@ -100,13 +100,6 @@ class Actor:
                (self.size + size) ** 2 / 4
 
 
-def str5(x: int) -> str:
-    s = str(x)
-    if len(s) < 5:
-        s = '0' * (5 - len(s)) + s
-    return s
-
-
 class GameTimer:
 
     def __init__(self):
@@ -115,9 +108,15 @@ class GameTimer:
         lb.refresh()
         self.image = Rectangle(pos=(0, 0), size=(100, 30), texture=lb.texture)
 
+    def get_text_time(self):
+        s = str(int(self.time * 10))
+        if len(s) < 5:
+            s = '0' * (5 - len(s)) + s
+        return s
+
     def count_time(self, dt):
         self.time += dt
-        lb = Label(text=str5(int(self.time * 10)))
+        lb = Label(text=self.get_text_time())
         lb.refresh()
         self.image.texture = lb.texture
 
