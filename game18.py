@@ -1,4 +1,4 @@
-# repeat delay
+# new keyboard
 from kivy.graphics import Rectangle
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
@@ -7,7 +7,6 @@ from kivy.clock import Clock
 from random import random
 from math import sin, cos, pi
 from kivy.core.text import Label
-import os
 
 
 class Background:
@@ -21,18 +20,22 @@ class Hero:
     def __init__(self, x, y, size, face, moving_face, hit_face):
         self.x = x
         self.y = y
+        self.vx = 0
+        self.vy = 0
         self.size = size
         self.face = face
         self.moving_face = moving_face
         self.hit_face = hit_face
+        self.v = 200
         self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 
-    def move(self, dx, dy):
-        self.x += dx
-        self.y += dy
+    def move(self, dt):
+        self.x += self.vx * dt
+        self.y += self.vy * dt
         if self.is_out():
-            self.x -= dx
-            self.y -= dy
+            self.x -= self.vx * dt
+            self.y -= self.vy * dt
+            self.vx = self.vy = 0
         self.image.pos = (self.x, self.y)
 
     def is_out(self):
@@ -53,7 +56,6 @@ class Actor:
         self.sad_face = sad_face
         self.sad_time = sad_time
         self.timer = 0
-        self.sad_time = sad_time
         self.image = Rectangle(pos=(x, y), size=(size, size), source=happy_face)
 
     def move(self, dt):
@@ -150,6 +152,7 @@ class Stage(Widget):
 
     def move(self, dt):
         self.game_timer.count_time(dt)
+        self.hero.move(dt)
         for a in self.actors:
             a.move(dt)
         self.do_if_hit_hero()
@@ -169,16 +172,22 @@ class Stage(Widget):
         if self.is_running:
             self.hero.image.source = self.hero.moving_face
             if keycode[1] == 'up':
-                self.hero.move(0, 5)
+                self.hero.vx = 0
+                self.hero.vy = self.hero.v
             if keycode[1] == 'down':
-                self.hero.move(0, -5)
+                self.hero.vx = 0
+                self.hero.vy = -self.hero.v
             if keycode[1] == 'left':
-                self.hero.move(-5, 0)
+                self.hero.vx = -self.hero.v
+                self.hero.vy = 0
             if keycode[1] == 'right':
-                self.hero.move(5, 0)
+                self.hero.vx = self.hero.v
+                self.hero.vy = 0
 
     def do_on_key_up(self, keyboard, keycode):
         if self.is_running:
+            self.hero.vx = 0
+            self.hero.vy = 0
             self.hero.image.source = self.hero.face
 
     def start(self):
@@ -201,6 +210,7 @@ class Game(App):
         s = Stage(gt, h)
         s.set_background(Background('images/space.png'))
         s.show_game_timer()
+        s.show_hero()
 
         for i in range(5):
             angle = random() * 2 * pi
@@ -208,14 +218,12 @@ class Game(App):
                       happy_face='images/smiley.png', sad_face='images/smiley_crazy.png', sad_time=0.4)
             s.add(a)
 
-        s.show_hero()
         s.start()
 
         return s
 
 
-os.system('xset r off')
 g = Game()
 g.run()
-os.system('set r on')
+
 
