@@ -12,7 +12,6 @@ class Stage(Widget):
 class Game(App):
 
     def build(self):
-        # Window.size = (600, 600)
         s = Stage()
         return s
 

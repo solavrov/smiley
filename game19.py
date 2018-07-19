@@ -169,7 +169,7 @@ class Stage(Widget):
         self.hero.move(dt)
         for a in self.actors:
             a.move(dt)
-        # self.do_if_hit_hero()
+        self.do_if_hit_hero()
 
     def do_if_hit_hero(self):
         for a in self.actors:
