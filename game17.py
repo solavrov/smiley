@@ -75,10 +75,10 @@ class Actor:
             self.x = 0
             self.image.source = self.sad_face
             self.timer = self.sad_time
-        if self.y + self.size > Window.size[0]:
+        if self.y + self.size > Window.size[1]:
             self.vx = self.vx * self.a
             self.vy = -self.vy * self.a
-            self.y = Window.size[0] - self.size
+            self.y = Window.size[1] - self.size
             self.image.source = self.sad_face
             self.timer = self.sad_time
         if self.y < 0:

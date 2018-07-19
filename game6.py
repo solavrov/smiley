@@ -29,9 +29,9 @@ class Actor:
         if self.x < 0:
             self.vx = -self.vx
             self.x = 0
-        if self.y + self.size > Window.size[0]:
+        if self.y + self.size > Window.size[1]:
             self.vy = -self.vy
-            self.y = Window.size[0] - self.size
+            self.y = Window.size[1] - self.size
         if self.y < 0:
             self.vy = -self.vy
             self.y = 0
