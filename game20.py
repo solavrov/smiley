@@ -123,7 +123,7 @@ class GameTimer:
 
     def __init__(self):
         self.time = 0
-        lb = Label(text='00000')
+        lb = Label(text='00000', color=[1, 0, 0, 1])
         lb.refresh()
         self.image = Rectangle(pos=(0, 0), size=(100, 30), texture=lb.texture)
 
@@ -135,7 +135,7 @@ class GameTimer:
 
     def count_time(self, dt):
         self.time += dt
-        lb = Label(text=self.get_text_time())
+        lb = Label(text=self.get_text_time(), color=[1, 0, 0, 1])
         lb.refresh()
         self.image.texture = lb.texture
 
@@ -224,7 +224,6 @@ class Game(App):
 
         s = Stage(gt, h)
         s.set_background(Background('images/space.png'))
-        s.show_game_timer()
         s.show_hero()
 
         for i in range(5):
@@ -233,6 +232,7 @@ class Game(App):
                       happy_face='images/smiley.png', sad_face='images/smiley_crazy.png', sad_time=0.4, speed_lim=750)
             s.add(a)
 
+        s.show_game_timer()
         s.start()
 
         return s
