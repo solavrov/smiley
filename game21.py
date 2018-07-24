@@ -154,6 +154,7 @@ class Stage(Widget):
         self.keyboard = Window.request_keyboard(self.close_keyboard, self)
         self.keyboard.bind(on_key_down=self.on_key_down)
         self.keyboard.bind(on_key_up=self.on_key_up)
+        self.keys = {'up': 'w', 'down': 's', 'left': 'a', 'right': 'd'}
         self.pressed_keys = []
 
     def set_background(self, background):
@@ -190,19 +191,19 @@ class Stage(Widget):
 
     def act_on_key(self):
         if len(self.pressed_keys) > 0:
-            if self.pressed_keys[-1] == 'w':
+            if self.pressed_keys[-1] == self.keys['up']:
                 self.hero.vx = 0
                 self.hero.vy = self.hero.v
                 self.hero.image.source = self.hero.moving_face
-            if self.pressed_keys[-1] == 's':
+            if self.pressed_keys[-1] == self.keys['down']:
                 self.hero.vx = 0
                 self.hero.vy = -self.hero.v
                 self.hero.image.source = self.hero.moving_face
-            if self.pressed_keys[-1] == 'a':
+            if self.pressed_keys[-1] == self.keys['left']:
                 self.hero.vx = -self.hero.v
                 self.hero.vy = 0
                 self.hero.image.source = self.hero.moving_face
-            if self.pressed_keys[-1] == 'd':
+            if self.pressed_keys[-1] == self.keys['right']:
                 self.hero.vx = self.hero.v
                 self.hero.vy = 0
                 self.hero.image.source = self.hero.moving_face
@@ -213,14 +214,14 @@ class Stage(Widget):
 
     def on_key_down(self, keyboard, keycode, text, modifiers):
         if self.is_running:
-            if keycode[1] not in self.pressed_keys and keycode[1] in ['w', 's', 'a', 'd']:
+            if keycode[1] not in self.pressed_keys and keycode[1] in self.keys.values():
                 self.pressed_keys.append(keycode[1])
             self.act_on_key()
             # print(self.pressed_keys)
 
     def on_key_up(self, keyboard, keycode):
         if self.is_running:
-            if keycode[1] in ['w', 's', 'a', 'd']:
+            if keycode[1] in self.keys.values():
                 self.pressed_keys.remove(keycode[1])
             self.act_on_key()
             # print(self.pressed_keys)
