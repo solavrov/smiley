@@ -239,7 +239,7 @@ class Game(App):
     def build(self):
         Window.size = (600, 600)
 
-        gt = GameTimer(color=[0, 0, 1, 1])
+        gt = GameTimer(color=[1, 0, 1, 1])
         h = Hero(275, 275, 300, 50, 'images/smiley.png', 'images/smiley_amazed.png', 'images/smiley_hit.png')
 
         s = Stage(gt, h)
