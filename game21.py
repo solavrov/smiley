@@ -240,7 +240,7 @@ class Game(App):
         Window.size = (600, 600)
 
         gt = GameTimer(color=[1, 0, 1, 1])
-        h = Hero(275, 275, 300, 50, 'images/smiley.png', 'images/smiley_amazed.png', 'images/smiley_hit.png')
+        h = Hero(275, 275, 300, 50, 'images/smiley.png', 'images/smiley_amazed.png', 'images/smiley_sad.png')
 
         s = Stage(gt, h)
         s.set_background(Background('images/space.png'))
@@ -249,7 +249,7 @@ class Game(App):
         for i in range(5):
             angle = random() * 2 * pi
             a = Actor(x=random() * 150, y=random() * 150, vx=50 * sin(angle), vy=50 * cos(angle), a=0.1, size=50,
-                      happy_face='images/smiley.png', sad_face='images/smiley_crazy.png', sad_time=0.4, speed_lim=750)
+                      happy_face='images/angry.png', sad_face='images/sick.png', sad_time=0.4, speed_lim=750)
             s.add(a)
 
         s.show_game_timer()
