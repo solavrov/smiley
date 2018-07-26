@@ -154,7 +154,7 @@ class Stage(Widget):
         self.keyboard = Window.request_keyboard(self.close_keyboard, self)
         self.keyboard.bind(on_key_down=self.on_key_down)
         self.keyboard.bind(on_key_up=self.on_key_up)
-        self.keys = {'up': 'w', 'down': 's', 'left': 'a', 'right': 'd'}
+        self.keys = {'up': 'up', 'down': 'down', 'left': 'left', 'right': 'right'}
         self.pressed_keys = []
 
     def set_background(self, background):
@@ -240,7 +240,7 @@ class Game(App):
         Window.size = (600, 600)
 
         gt = GameTimer(color=[1, 0, 1, 1])
-        h = Hero(275, 275, 300, 50, 'images/smiley.png', 'images/smiley_amazed.png', 'images/smiley_sad.png')
+        h = Hero(275, 275, 300, 50, 'images/happy.png', 'images/wink.png', 'images/shocked.png')
 
         s = Stage(gt, h)
         s.set_background(Background('images/space.png'))
@@ -248,7 +248,7 @@ class Game(App):
 
         for i in range(5):
             angle = random() * 2 * pi
-            a = Actor(x=random() * 150, y=random() * 150, vx=50 * sin(angle), vy=50 * cos(angle), a=0.1, size=50,
+            a = Actor(x=random() * 150, y=random() * 150, vx=100 * sin(angle), vy=100 * cos(angle), a=0.05, size=50,
                       happy_face='images/angry.png', sad_face='images/sick.png', sad_time=0.4, speed_lim=750)
             s.add(a)
 
