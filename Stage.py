@@ -97,7 +97,7 @@ class Stage(Widget):
             self.act_on_key()
         else:
             if keycode[1] == 'enter':
-                self.layout.place_widget(Stage(self.layout, self.folder))
+                self.layout.place_widget(Stage(self.layout))
         if path.isdir('images' + keycode[1]):
             self.change_theme('images' + keycode[1] + '/')
 
