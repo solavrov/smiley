@@ -4,20 +4,20 @@ from kivy.core.window import Window
 
 class Momo:
 
-    def __init__(self, x, y, vx, vy, a, size, happy_face, sad_face, sad_time, speed_lim):
+    def __init__(self, x, y, vx, vy, a, size, face, sad_face, sad_time, speed_lim):
         self.x = x
         self.y = y
         self.vx = vx
         self.vy = vy
         self.a = a
         self.size = size
-        self.happy_face = happy_face
+        self.face = face
         self.sad_face = sad_face
         self.sad_time = sad_time
         self.speed_lim = speed_lim
         self.speed_lim_is_not_reached = True
         self.timer = 0
-        self.image = Rectangle(pos=(x, y), size=(size, size), source=happy_face)
+        self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 
     def limit_speed(self):
         if self.speed_lim_is_not_reached:
@@ -69,7 +69,7 @@ class Momo:
             self.timer -= dt
             if self.timer <= 0:
                 self.timer = 0
-                self.image.source = self.happy_face
+                self.image.source = self.face
 
     def is_hit(self, x, y, size):
         return (self.x + self.size / 2 - x - size / 2) ** 2 + (self.y + self.size / 2 - y - size / 2) ** 2 < \

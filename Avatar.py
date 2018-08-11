@@ -4,7 +4,7 @@ from kivy.core.window import Window
 
 class Avatar:
 
-    def __init__(self, x, y, v, size, face, moving_face, hit_face):
+    def __init__(self, x, y, v, size, face, moving_face, catch_face):
         self.x = x
         self.y = y
         self.vx = 0
@@ -12,7 +12,7 @@ class Avatar:
         self.size = size
         self.face = face
         self.moving_face = moving_face
-        self.hit_face = hit_face
+        self.catch_face = catch_face
         self.v = v
         self.image = Rectangle(pos=(x, y), size=(size, size), source=face)
 

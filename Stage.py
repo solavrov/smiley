@@ -17,7 +17,7 @@ class Stage(Widget):
         self.folder = folder
         self.game_timer = GameTimer(color=[1, 0, 1, 1])
         self.avatar = Avatar(x=275, y=275, v=300, size=50,
-                             face=folder + 'avatar.png', moving_face=folder + 'move.png', hit_face=folder + 'catch.png')
+                             face=folder + 'avatar.png', moving_face=folder + 'move.png', catch_face=folder + 'catch.png')
         self.momos = []
         self.clock = None
         self.is_running = True
@@ -28,16 +28,16 @@ class Stage(Widget):
         self.pressed_keys = []
         self.background = Rectangle(pos=(0, 0), size=(Window.size[0], Window.size[1]), source=folder + 'back.png')
         self.canvas.add(self.background)
-        self.show_hero()
+        self.show_avatar()
         for i in range(5):
             angle = random() * 2 * pi
             a = Momo(x=random() * 150, y=random() * 150, vx=100 * sin(angle), vy=100 * cos(angle), a=0.05, size=50,
-                     happy_face=folder + 'momo.png', sad_face=folder + 'hit.png', sad_time=0.4, speed_lim=750)
+                     face=folder + 'momo.png', sad_face=folder + 'hit.png', sad_time=0.4, speed_lim=750)
             self.add(a)
         self.show_game_timer()
         self.start()
 
-    def show_hero(self):
+    def show_avatar(self):
         self.canvas.add(self.avatar.image)
 
     def show_game_timer(self):
@@ -57,7 +57,7 @@ class Stage(Widget):
     def do_if_hit_hero(self):
         for a in self.momos:
             if a.is_hit(self.avatar.x, self.avatar.y, self.avatar.size):
-                self.avatar.image.source = self.avatar.hit_face
+                self.avatar.image.source = self.avatar.catch_face
                 self.stop()
                 break
 
@@ -103,7 +103,10 @@ class Stage(Widget):
     def on_key_up(self, keyboard, keycode):
         if self.is_running:
             if keycode[1] in self.keys.values():
-                self.pressed_keys.remove(keycode[1])
+                try:
+                    self.pressed_keys.remove(keycode[1])
+                except:
+                    pass
             self.act_on_key()
 
     def change_theme(self, folder):
@@ -112,7 +115,7 @@ class Stage(Widget):
         self.avatar.face = folder + 'avatar.png'
         self.avatar.image.source = self.avatar.face
         self.avatar.moving_face = folder + 'move.png'
-        self.avatar.hit_face = folder + 'catch.png'
+        self.avatar.catch_face = folder + 'catch.png'
         for e in self.momos:
             e.happy_face = folder + 'momo.png'
             e.image.source = e.happy_face
