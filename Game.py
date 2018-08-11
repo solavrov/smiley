@@ -3,7 +3,6 @@ from kivy.core.window import Window
 from kivy.app import App
 from Layout import Layout
 
-
 class Game(App):
 
     def build(self):
@@ -12,7 +11,7 @@ class Game(App):
 
         l = Layout()
 
-        s = Stage(l, 'images1/')
+        s = Stage(l)
 
         l.place_widget(s)
 

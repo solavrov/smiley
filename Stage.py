@@ -12,10 +12,10 @@ from os import path
 
 class Stage(Widget):
 
-    def __init__(self, layout, folder, **kwargs):
+    def __init__(self, layout, **kwargs):
         super().__init__(**kwargs)
         self.layout = layout
-        self.folder = folder
+        self.folder = folder = 'images1/'
         self.game_timer = GameTimer(color=[1, 0, 1, 1])
         self.avatar = Avatar(x=275, y=275, v=300, size=50,
                              face=folder + 'avatar.png', moving_face=folder + 'move.png', hit_face=folder + 'catch.png')
