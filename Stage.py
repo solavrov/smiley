@@ -1,12 +1,13 @@
 from kivy.core.window import Window
 from kivy.uix.widget import Widget
 from kivy.clock import Clock
-from Background import Background
+from kivy.graphics import Rectangle
 from GameTimer import GameTimer
 from Momo import Momo
 from Avatar import Avatar
 from random import random
 from math import sin, cos, pi
+from os import path
 
 
 class Stage(Widget):
@@ -26,7 +27,8 @@ class Stage(Widget):
         self.keyboard.bind(on_key_up=self.on_key_up)
         self.keys = {'up': 'up', 'down': 'down', 'left': 'left', 'right': 'right'}
         self.pressed_keys = []
-        self.set_background(Background(folder + 'back.png'))
+        self.background = Rectangle(pos=(0, 0), size=(Window.size[0], Window.size[1]), source=folder + 'back.png')
+        self.canvas.add(self.background)
         self.show_hero()
         for i in range(5):
             angle = random() * 2 * pi
@@ -35,9 +37,6 @@ class Stage(Widget):
             self.add(a)
         self.show_game_timer()
         self.start()
-
-    def set_background(self, background):
-        self.canvas.add(background.image)
 
     def show_hero(self):
         self.canvas.add(self.avatar.image)
@@ -97,14 +96,28 @@ class Stage(Widget):
                 self.pressed_keys.append(keycode[1])
             self.act_on_key()
         else:
-            if keycode[1] == 'q':
+            if keycode[1] == 'enter':
                 self.layout.place_widget(Stage(self.layout, self.folder))
+        if path.isdir('images' + keycode[1]):
+            self.change_theme('images' + keycode[1] + '/')
 
     def on_key_up(self, keyboard, keycode):
         if self.is_running:
             if keycode[1] in self.keys.values():
                 self.pressed_keys.remove(keycode[1])
             self.act_on_key()
+
+    def change_theme(self, folder):
+        self.folder = folder
+        self.background.source = folder + 'back.png'
+        self.avatar.face = folder + 'avatar.png'
+        self.avatar.image.source = self.avatar.face
+        self.avatar.moving_face = folder + 'move.png'
+        self.avatar.hit_face = folder + 'catch.png'
+        for e in self.momos:
+            e.happy_face = folder + 'momo.png'
+            e.image.source = e.happy_face
+            e.sad_face = folder + 'hit.png'
 
     def start(self):
         self.clock = Clock.schedule_interval(self.move, 1 / 60)

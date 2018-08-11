@@ -12,7 +12,7 @@ class Game(App):
 
         l = Layout()
 
-        s = Stage(l, 'images/')
+        s = Stage(l, 'images1/')
 
         l.place_widget(s)
 
