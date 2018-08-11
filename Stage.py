@@ -12,10 +12,9 @@ from os import path
 
 class Stage(Widget):
 
-    def __init__(self, layout, **kwargs):
+    def __init__(self, folder, **kwargs):
         super().__init__(**kwargs)
-        self.layout = layout
-        self.folder = folder = 'images1/'
+        self.folder = folder
         self.game_timer = GameTimer(color=[1, 0, 1, 1])
         self.avatar = Avatar(x=275, y=275, v=300, size=50,
                              face=folder + 'avatar.png', moving_face=folder + 'move.png', hit_face=folder + 'catch.png')
@@ -97,7 +96,7 @@ class Stage(Widget):
             self.act_on_key()
         else:
             if keycode[1] == 'enter':
-                self.layout.place_widget(Stage(self.layout))
+                self.__init__(self.folder)
         if path.isdir('images' + keycode[1]):
             self.change_theme('images' + keycode[1] + '/')
 
