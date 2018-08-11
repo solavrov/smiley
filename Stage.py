@@ -14,6 +14,7 @@ class Stage(Widget):
     def __init__(self, layout, folder, **kwargs):
         super().__init__(**kwargs)
         self.layout = layout
+        self.folder = folder
         self.game_timer = GameTimer(color=[1, 0, 1, 1])
         self.avatar = Avatar(x=275, y=275, v=300, size=50,
                              face=folder + 'avatar.png', moving_face=folder + 'move.png', hit_face=folder + 'catch.png')
@@ -95,14 +96,15 @@ class Stage(Widget):
             if keycode[1] not in self.pressed_keys and keycode[1] in self.keys.values():
                 self.pressed_keys.append(keycode[1])
             self.act_on_key()
-            # print(self.pressed_keys)
+        else:
+            if keycode[1] == 'q':
+                self.layout.place_widget(Stage(self.layout, self.folder))
 
     def on_key_up(self, keyboard, keycode):
         if self.is_running:
             if keycode[1] in self.keys.values():
                 self.pressed_keys.remove(keycode[1])
             self.act_on_key()
-            # print(self.pressed_keys)
 
     def start(self):
         self.clock = Clock.schedule_interval(self.move, 1 / 60)
