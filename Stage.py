@@ -117,8 +117,8 @@ class Stage(Widget):
         self.avatar.moving_face = folder + 'move.png'
         self.avatar.catch_face = folder + 'catch.png'
         for e in self.momos:
-            e.happy_face = folder + 'momo.png'
-            e.image.source = e.happy_face
+            e.face = folder + 'momo.png'
+            e.image.source = e.face
             e.sad_face = folder + 'hit.png'
 
     def start(self):
